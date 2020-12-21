@@ -1,0 +1,12 @@
+{
+  "name": "AdventOfCode2020",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "git@github.com:wesbragagt/AdventOfCode2020.git",
+  "author": "Weslley Braga <wesbragagt@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "axios": "^0.21.0",
+    "dotenv": "^8.2.0"
+  }
+}
