@@ -32,4 +32,23 @@ const {convertInputToNumbersArray} = require('./helper')
 
 getInputChallenge(1)
 .then(convertInputToNumbersArray)
-.then(data => console.log(data))
+.then(main)
+
+function main(input){
+  // remove duplicate values
+  const uniqueValues = [...new Set(input)]
+  const sorted = uniqueValues.sort((a, b) => a-b)
+  const findPair = num => 2020 - num
+  
+  let pair = []
+  for(let i = 0; i < sorted.length; i++){
+    if(pair.length === 2){
+      break
+    }
+    const foundPair = sorted.indexOf(findPair(sorted[i]))
+    foundPair !== -1 && pair.push(sorted[foundPair])
+  }
+  const answer = pair[0] * pair[1]
+  console.log(answer)
+  return answer
+}
