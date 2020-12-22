@@ -33,8 +33,15 @@ const {convertInputToNumbersArray} = require('./helper')
 getInputChallenge(1)
 .then(convertInputToNumbersArray)
 .then(main)
+.catch(error => console.log(error.message))
 
 function main(input){
+  const part1Answer = part1(input)
+  const part2Answer = part2(input)
+  console.log({part1Answer, part2Answer})
+}
+
+function part1(input){
   // remove duplicate values
   const uniqueValues = [...new Set(input)]
   const sorted = uniqueValues.sort((a, b) => a-b)
@@ -42,6 +49,7 @@ function main(input){
   
   let pair = []
   for(let i = 0; i < sorted.length; i++){
+    // quit the loop when those pairs are found
     if(pair.length === 2){
       break
     }
@@ -49,6 +57,39 @@ function main(input){
     foundPair !== -1 && pair.push(sorted[foundPair])
   }
   const answer = pair[0] * pair[1]
-  console.log(answer)
   return answer
+}
+
+function part2(arr){
+  arr.sort((a, b) => {
+    return a - b;
+  });
+
+  const result = [];
+
+  for (let indexA = 0; indexA < arr.length - 2; indexA++) {
+
+    let indexB = indexA + 1;
+    let indexC = arr.length - 1;
+    // avoid duplicate values
+    if (indexA > 0 && arr[indexA] === arr[indexA - 1]) continue;
+
+    while (indexB < indexC ) {
+
+      let sum = arr[indexA] + arr[indexB] + arr[indexC];
+
+      if (sum < 2020) {
+        indexB++;
+      } else if (sum > 2020) {
+        indexC--;
+      } else {
+        result.push(arr[indexA], arr[indexB], arr[indexC]);
+        while (arr[indexB] === arr[indexB + 1]) indexB++;
+        while (arr[indexC] === arr[indexC - 1]) indexC--
+        indexB++;
+        indexC--;
+      }
+    }
+  }
+  return result.reduce((acc, num) => acc *= num);
 }
